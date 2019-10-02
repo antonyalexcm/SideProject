@@ -148,7 +148,7 @@ class AddressBook:
             elif(operation == 7):
                 self.save_addressbook()
             elif(operation == 8):
-                main()
+                return self
             else:
                 print("\nWrong Selection, Try again!!")
                 self.addressbook_operation()
@@ -225,9 +225,6 @@ class AddressBook:
         file_new.close()
         self.addressbook_operation()
 
-def main():
-    new_book = MainMenu()
-    new_book.Mainmenu_operation()
 
 class MainMenu:
     def __init__(self):
@@ -271,10 +268,10 @@ class MainMenu:
     
     def open_addressbook(self):
 
-        print(os.listdir())
+        print(os.listdir("e:/Addressbook/New_Addressbook/Saved_addressbook"))
         file_to_open = str(input("Enter the file to open : "))
         try:
-            file_to_read = open(file_to_open,"r")
+            file_to_read = open("e:/Addressbook/New_Addressbook/Saved_addressbook/"+file_to_open,"r")
             file_to_read = file_to_read.read()
 
         except FileNotFoundError:
@@ -284,7 +281,7 @@ class MainMenu:
         self.Mainmenu_operation()
     
     def delete_address(self):
-        print(os.listdir())
+        print(os.listdir("/Saved_addressbook"))
         file_to_delete = str(input("Enter the file to delete : "))
         try:
             os.remove(file_to_delete)
@@ -297,6 +294,10 @@ class MainMenu:
     @staticmethod
     def Main_menu_exit():
         exit()
+
+def main():
+    new_book = MainMenu()
+    new_book.Mainmenu_operation()
 
 if __name__ == "__main__":
     main()
