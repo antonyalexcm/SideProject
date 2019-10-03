@@ -52,6 +52,7 @@ class PersonAddress(Address):
         return '\n'.join(lines)
 
 class Addressformat:
+
     def print_address(self,address):
         print_list = []
         print_list.append("{} {}".format(address.first_name, address.last_name))
@@ -60,12 +61,6 @@ class Addressformat:
         print_list.append("{}".format(address.phone_number))
 
         return print_list
-
-
-class AddressPrinter:
-    def print_address(self,Address):
-        print(Address)
-        return
 
 class InputAddress:
 
@@ -102,10 +97,20 @@ class AddressBook:
     def add_person(self): 
         new_input = InputAddress()
         address_new = new_input.input_address()
+        print(address_new)
         self.element_in_address_book.append(address_new)
-        self.addressbook_operation()
+        action = int(input("Press 1 -> If you want to enter another object (Else enter any other key) :"))
+        if (action == 1):
+            self.add_person()
+        else:
+            self.addressbook_operation()
 
     def delete_address(self):
+        print("\r")
+        print("Enter the details of person that you want to delete : ")
+        for address in self.element_in_address_book:
+            print("\r")
+            print(address)
         new_name = NameInput()
         first_name_delete, last_name_delete = new_name.names()
         flag = True
@@ -154,6 +159,7 @@ class AddressBook:
                 self.addressbook_operation()
         except UnboundLocalError as e:
             print(e)
+
     def edit_already_existing_addressbook(self, list_address):
         self.element_in_address_book = list_address
         self.addressbook_operation()
@@ -162,6 +168,11 @@ class AddressBook:
 
   
     def edit_address(self):
+        print("\r")
+        print("Enter the details of person that you want to edit : ")
+        for address in self.element_in_address_book:
+            print("\r")
+            print(address)
         new_name = NameInput()
         first_name_edit, last_name_edit = new_name.names()
         flag = True
@@ -177,13 +188,12 @@ class AddressBook:
         self.addressbook_operation()
     
     def print_in_mailing_list(self):
-        printer = AddressPrinter()
         details = int(input('''\n\t     1 -> Print entire address book in mailing list format
              2 -> Print a particular address from the book\n
              '''))
         if(details == 1):
             for person in self.element_in_address_book:
-                printer.print_address(person)
+                print(person)
              
             
         elif(details == 2):
@@ -193,26 +203,24 @@ class AddressBook:
             for person in self.element_in_address_book:
                 if(person.first_name == first_name_print and person.last_name == last_name_print):
                         print("\r")
-                        printer.print_address(person)
+                        print(person)
                         flag = False
                 if(flag == True):
                     print("\nAddress does not Exist!!!")
         self.addressbook_operation()
 
     def sort_by_name(self):
-        printer = AddressPrinter()
         self.element_in_address_book.sort(key = lambda x: (x.first_name, x.last_name))
         print("\r")
         for person in self.element_in_address_book:
-                printer.print_address(person)
+                print(person)
         self.addressbook_operation()
     
     def sort_by_zip(self):
-        printer = AddressPrinter()
         self.element_in_address_book.sort(key = lambda x: x.zip_code)
         print("\r")
         for person in self.element_in_address_book:
-                printer.print_address(person)
+                print(person)
         self.addressbook_operation()
     
     def create_list_append(self):
@@ -242,7 +250,7 @@ class MainMenu:
         print('''\n\t     1 -> Open a new Address book
              2 -> Delete an addressbook
              3 -> Open a saved addressbook
-             5 -> Exit
+             4 -> Exit
              ''')
         try:
             operation = int(input("\nEnter operation :"))
@@ -257,8 +265,6 @@ class MainMenu:
                 self.open_addressbook()
             elif(operation == 4):
                 self.Main_menu_exit()
-            elif(operation == 5):
-                self.Main_menu_exit()
             else:
                 print("\nWrong Selection, Try again!!")
                 self.Mainmenu_operation()
@@ -268,7 +274,7 @@ class MainMenu:
 
 
     def new_addressbook(self):
-        Addressbook_name = str(input("Enter a name for your new addressbook name : "))
+        Addressbook_name = str(input("Enter a name for your new addressbook : "))
         Addressbook_name = AddressBook(Addressbook_name)
         self.addressbooks.append(Addressbook_name)
         Addressbook_name.addressbook_operation()
