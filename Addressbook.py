@@ -4,7 +4,7 @@
 
 import json
 import os
-from abc import ABC, abstractmethod
+from abc import ABC
 
 class Address(ABC):
     # creating and initializing an address
