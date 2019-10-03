@@ -2,7 +2,7 @@
    @version: Python 3.7
    @purpose: Addressbook program python'''
 
-
+import json
 import os
 from abc import ABC, abstractmethod
 
@@ -154,6 +154,12 @@ class AddressBook:
                 self.addressbook_operation()
         except UnboundLocalError as e:
             print(e)
+    def edit_already_existing_addressbook(self, list_address):
+        self.element_in_address_book = list_address
+        self.addressbook_operation()
+
+       
+
   
     def edit_address(self):
         new_name = NameInput()
@@ -209,22 +215,24 @@ class AddressBook:
                 printer.print_address(person)
         self.addressbook_operation()
     
+    def create_list_append(self):
+        invent_dict = read_file()
+        for inventory in invent_dict['Inventories']:
+            invent_obj = Inventory(inventory['name'],inventory['weight_in_kg'],inventory['price_per_kg'])
+            self.inventory_list.append(invent_obj)
+    
     def save_addressbook(self):
         printer = Addressformat()
         save_list = []
         name_to_save = self.Bookname
-        file_name =  name_to_save + '.txt'
-        for person in self.element_in_address_book:
-            address_new = printer.print_address(person)
-            save_list.append(address_new)
-        file_new = open(file_name,"w+")
-        for i in range(0, len(save_list)):
-            content_to_save ='\n'.join(save_list[i]) 
-            print(content_to_save)
-            file_new.write(content_to_save)
-        file_new.close()
-        self.addressbook_operation()
-
+        file_name =  "/home/admin-1/Antony_Alex/Addressbook/Saved_addressbook/" + name_to_save + '.json'
+        New_address = {"Addresses" : []}            
+        for address in self.element_in_address_book:
+            #address_obj = PersonAddress(address['first_name'],address['last_name'],address['Address'],address['City'],address['State'],address['Zip_code'],address['Phone_number'])
+            dictionary = {"first_name": address.first_name,"last_name": address.last_name,"Address": address.address,"City":address.city,"State": address.state,"Zip_code": address.zip_code,"Phone_number":address.phone_number}
+            New_address["Addresses"].append(dictionary)
+        file_object = open(file_name, 'w+')
+        json.dump(New_address, file_object,indent=2)
 
 class MainMenu:
     def __init__(self):
@@ -233,8 +241,8 @@ class MainMenu:
     def Mainmenu_operation(self):
         print('''\n\t     1 -> Open a new Address book
              2 -> Delete an addressbook
-             3 -> Open an addressbook
-             4 -> Exit
+             3 -> Open a saved addressbook
+             5 -> Exit
              ''')
         try:
             operation = int(input("\nEnter operation :"))
@@ -248,6 +256,8 @@ class MainMenu:
             elif(operation == 3):
                 self.open_addressbook()
             elif(operation == 4):
+                self.Main_menu_exit()
+            elif(operation == 5):
                 self.Main_menu_exit()
             else:
                 print("\nWrong Selection, Try again!!")
@@ -264,24 +274,43 @@ class MainMenu:
         Addressbook_name.addressbook_operation()
 
         self.Mainmenu_operation()
-
     
     def open_addressbook(self):
 
-        print(os.listdir("e:/Addressbook/New_Addressbook/Saved_addressbook"))
+        print(os.listdir("/home/admin-1/Antony_Alex/Addressbook/Saved_addressbook"))
         file_to_open = str(input("Enter the file to open : "))
-        try:
-            file_to_read = open("e:/Addressbook/New_Addressbook/Saved_addressbook/"+file_to_open,"r")
-            file_to_read = file_to_read.read()
 
+        try:
+            with open("/home/admin-1/Antony_Alex/Addressbook/Saved_addressbook/"+file_to_open) as f:
+                data = json.load(f)
+            self.create_list_append(data, file_to_open)
+            # file_to_read = open("e:/Addressbook/New_Addressbook/Saved_addressbook/"+file_to_open,"r")
+            # file_to_read = file_to_read.read()
         except FileNotFoundError:
             print("File does not exist!!!")
-        print(file_to_read)
 
         self.Mainmenu_operation()
     
+    def create_list_append(self, Addresses, name):
+        address_dict = Addresses
+        address_list = []
+        for address in address_dict['Addresses']:
+            address_obj = PersonAddress(address['first_name'],address['last_name'],address['Address'],address['City'],address['State'],address['Zip_code'],address['Phone_number'])
+            address_list.append(address_obj)
+            print("\r")
+            print(address_obj)
+            print("\r")
+        action = int(input("Enter 1 if you want to edit the addressbook : "))
+        file_to_open = name.replace(".json","")
+        file_to_open = AddressBook(file_to_open)
+        if(action == 1):
+            file_to_open.edit_already_existing_addressbook(address_list)
+        else:
+            self.Mainmenu_operation()
+
+        
     def delete_address(self):
-        print(os.listdir("/Saved_addressbook"))
+        print(os.listdir("/home/admin-1/Antony_Alex/Addressbook/Saved_addressbook"))
         file_to_delete = str(input("Enter the file to delete : "))
         try:
             os.remove(file_to_delete)
@@ -289,8 +318,7 @@ class MainMenu:
             print(d)
 
         self.Mainmenu_operation()
-
-
+    
     @staticmethod
     def Main_menu_exit():
         exit()

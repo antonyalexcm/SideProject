@@ -1,0 +1,22 @@
+{
+  "Addresses": [
+    {
+      "first_name": "Antony",
+      "last_name": "Alex",
+      "Address": "Ryan",
+      "City": "Muhamma",
+      "State": "Mumbai",
+      "Zip_code": 688525,
+      "Phone_number": 987654
+    },
+    {
+      "first_name": "Rony",
+      "last_name": "Thomas",
+      "Address": "Balaji",
+      "City": "Kopar Khairane",
+      "State": "Maha",
+      "Zip_code": 789,
+      "Phone_number": 654
+    }
+  ]
+}
