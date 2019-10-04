@@ -1,0 +1,31 @@
+{
+  "Addresses": [
+    {
+      "first_name": "Antony",
+      "last_name": "Alex",
+      "Address": "Ryan",
+      "City": "Maha",
+      "State": "maha",
+      "Zip_code": 789,
+      "Phone_number": 654
+    },
+    {
+      "first_name": "amal",
+      "last_name": "dev",
+      "Address": "Ryan",
+      "City": "maha",
+      "State": "qwerty",
+      "Zip_code": 74,
+      "Phone_number": 32
+    },
+    {
+      "first_name": "ryan",
+      "last_name": "corner",
+      "Address": "Mahi",
+      "City": "Mahi",
+      "State": "TN",
+      "Zip_code": 123,
+      "Phone_number": 23
+    }
+  ]
+}
