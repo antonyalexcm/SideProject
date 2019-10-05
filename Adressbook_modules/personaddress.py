@@ -3,13 +3,18 @@ from Abstract_class import Address
 class PersonAddress(Address):
     # creating and initializing a person's address
     def __init__(self, first_name, last_name, address, city, state, zip_code, phone_number):
-        super().__init__(address, city, state, zip_code, phone_number)
+        super().__init__(address, city, state, zip_code)
         self.first_name = first_name
         if not self.first_name.isalpha():
             raise ValueError
         self.last_name = last_name
         if not self.last_name.isalpha():
             raise ValueError
+        try:
+            self.phone_number = int(phone_number)
+        except ValueError as e:
+            print(e)
+         
     
     def name_print(self):
         temp_list = [self.first_name]

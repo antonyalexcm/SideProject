@@ -19,10 +19,19 @@
       "Phone_number": 32
     },
     {
-      "first_name": "ryan",
-      "last_name": "corner",
-      "Address": "Mahi",
-      "City": "Mahi",
+      "first_name": "Bruce",
+      "last_name": "Wayne",
+      "Address": "WayneMansion",
+      "City": "Gotam",
+      "State": "NY",
+      "Zip_code": 987,
+      "Phone_number": 654
+    },
+    {
+      "first_name": "Ryan",
+      "last_name": "coner",
+      "Address": "mahi",
+      "City": "mahi",
       "State": "TN",
       "Zip_code": 123,
       "Phone_number": 23
